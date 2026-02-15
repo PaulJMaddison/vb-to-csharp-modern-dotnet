@@ -116,6 +116,10 @@ SQL Server endpoint: `localhost,14333` (user: `sa`, password: `Your_password123`
 - **Run**: `dotnet run --project src/13-ReverseProxy-Gateway/ReverseProxyGateway.csproj`
 - **Look for**: Route forwarding `/api/*` and `/auth/*` to separate backend services.
 
+## Foundations
+
+- [Windows vs Web Development](docs/foundations/Windows-vs-Web-Development.md)
+
 ## Pattern docs
 
 See `docs/patterns/`:
