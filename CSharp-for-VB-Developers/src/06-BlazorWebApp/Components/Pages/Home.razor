@@ -1,0 +1,18 @@
+@page "/"
+@rendermode InteractiveServer
+
+<PageTitle>Current Time</PageTitle>
+
+<h1>Current Time</h1>
+<p>The current server time is: <strong>@currentTime</strong></p>
+<button @onclick="RefreshTime">Refresh Time</button>
+
+@code {
+    private DateTime currentTime = DateTime.Now;
+
+    // Similar to handling a WinForms Button.Click event: this method runs when the button is clicked.
+    private void RefreshTime()
+    {
+        currentTime = DateTime.Now;
+    }
+}

@@ -1,0 +1,18 @@
+@page "/counter"
+@rendermode InteractiveServer
+
+<PageTitle>Counter</PageTitle>
+
+<h1>Counter</h1>
+<p>Current count: <strong>@currentCount</strong></p>
+<button @onclick="IncrementCount">Click me</button>
+
+@code {
+    private int currentCount;
+
+    // Like WinForms, this is an event handler for a click; updating state refreshes the UI.
+    private void IncrementCount()
+    {
+        currentCount++;
+    }
+}

@@ -1,0 +1,26 @@
+@page "/message"
+@rendermode InteractiveServer
+
+<PageTitle>Message Form</PageTitle>
+
+<h1>Message Form</h1>
+
+<label for="messageInput">Enter a message:</label>
+<input id="messageInput" @bind="messageText" />
+<button @onclick="SubmitMessage">Submit</button>
+
+@if (!string.IsNullOrWhiteSpace(submittedMessage))
+{
+    <p>You entered: <strong>@submittedMessage</strong></p>
+}
+
+@code {
+    private string messageText = string.Empty;
+    private string submittedMessage = string.Empty;
+
+    // Comparable to WinForms TextBox + Button.Click: capture input and display it on submit.
+    private void SubmitMessage()
+    {
+        submittedMessage = messageText;
+    }
+}

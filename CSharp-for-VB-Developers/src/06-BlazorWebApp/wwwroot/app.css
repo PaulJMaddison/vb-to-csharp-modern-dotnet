@@ -1,0 +1,37 @@
+:root {
+    font-family: Arial, sans-serif;
+}
+
+body {
+    margin: 0;
+}
+
+.layout {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+.menu {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.menu a {
+    color: #0b57d0;
+    text-decoration: none;
+}
+
+.menu a.active {
+    font-weight: 700;
+}
+
+main {
+    border-top: 1px solid #ddd;
+    padding-top: 1rem;
+}
+
+input {
+    margin: 0 .5rem;
+}
