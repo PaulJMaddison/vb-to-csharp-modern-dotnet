@@ -1,0 +1,159 @@
+# =========================
+# Visual Studio
+# =========================
+
+.vs/
+.vscode/
+.idea/
+
+# User-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Mono auto generated files
+mono_crash.*
+
+# =========================
+# Build results
+# =========================
+
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+
+# Rider
+.idea/
+
+# =========================
+# .NET Core
+# =========================
+
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# =========================
+# VS Code
+# =========================
+
+.history/
+
+# =========================
+# Test Results
+# =========================
+
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+
+# =========================
+# NuGet
+# =========================
+
+*.nupkg
+*.snupkg
+
+# The packages folder can be ignored because of Package Restore
+**/[Pp]ackages/*
+!**/[Pp]ackages/build/
+
+# NuGet Symbol Packages
+*.symbols.nupkg
+
+# =========================
+# Resharper
+# =========================
+
+_ReSharper*/
+*.DotSettings.user
+
+# =========================
+# Publish Output
+# =========================
+
+publish/
+*.publishsettings
+*.azurePubxml
+*.pubxml
+*.pubxml.user
+
+# =========================
+# Windows Store app package directories
+# =========================
+
+AppPackages/
+BundleArtifacts/
+Package.StoreAssociation.xml
+_pkginfo.txt
+
+# =========================
+# Logs
+# =========================
+
+*.log
+
+# =========================
+# OS Files
+# =========================
+
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# =========================
+# IIS Express
+# =========================
+
+.vs/config/applicationhost.config
+
+# =========================
+# Dotnet tools
+# =========================
+
+.dotnet/
+
+# =========================
+# Local app settings
+# =========================
+
+appsettings.Development.json
+secrets.json
+
+# =========================
+# Entity Framework
+# =========================
+
+Migrations/
+
+# =========================
+# Node (if added later)
+# =========================
+
+node_modules/
+
+# =========================
+# Coverage
+# =========================
+
+coverage/
+*.coverage
+*.coveragexml
+
+# =========================
+# Others
+# =========================
+
+*.cache
+*.pdb

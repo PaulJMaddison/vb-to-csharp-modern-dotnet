@@ -1,0 +1,27 @@
+@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home";
+}
+
+<h1>Razor Pages (Web App)</h1>
+
+<p>
+    This is a server-rendered web UI. Think of it as a “web form” that runs on the server,
+    returning HTML to the browser.
+</p>
+
+<ul>
+    <li><strong>Now (server time):</strong> @Model.Now</li>
+    <li><strong>Message:</strong> @Model.Message</li>
+</ul>
+
+<form method="post">
+    <label>Enter a message:</label><br />
+    <input type="text" name="message" value="@Model.Message" style="width: 100%; max-width: 480px;" />
+    <button type="submit">Update</button>
+</form>
+
+<p style="margin-top: 1rem;">
+    Tip: In Razor Pages, <code>OnGet</code> handles GET requests, <code>OnPost</code> handles POST.
+</p>
