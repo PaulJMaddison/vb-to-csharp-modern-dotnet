@@ -157,3 +157,6 @@ coverage/
 
 *.cache
 *.pdb
+
+# Local lab runtime artifacts
+.lab/
