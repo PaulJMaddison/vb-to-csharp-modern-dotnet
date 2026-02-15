@@ -176,6 +176,10 @@ This solution intentionally mixes app styles so VB developers can compare old an
 9. **Adopt modern interactive web UI**: `06-BlazorWebApp` (then MVC concepts from docs for structured controller/view teams).
 10. **Plan modernization boundaries**: `13-ReverseProxy-Gateway` and strangler routing.
 
+## Foundations
+
+- [Windows vs Web Development](docs/foundations/Windows-vs-Web-Development.md)
+
 ## Pattern docs
 
 See `docs/patterns/`:
