@@ -37,6 +37,9 @@ Ports/endpoints: [`docs/ports-and-urls.md`](CSharp-for-VB-Developers/docs/ports-
 4. Team labs and standards: [`docs/learning-path/README.md`](CSharp-for-VB-Developers/docs/learning-path/README.md)
 5. Incremental modernisation playbook: [`docs/modernisation/00-Modernisation-Overview.md`](CSharp-for-VB-Developers/docs/modernisation/00-Modernisation-Overview.md)
 
+## .NET Framework -> .NET 8 Upgrade Training
+- Start here: [`docs/upgrade/README.md`](CSharp-for-VB-Developers/docs/upgrade/README.md)
+
 ## Docs hub
 ### Core
 - [`docs/VB-to-CSharp-Cheatsheet.md`](CSharp-for-VB-Developers/docs/VB-to-CSharp-Cheatsheet.md)
