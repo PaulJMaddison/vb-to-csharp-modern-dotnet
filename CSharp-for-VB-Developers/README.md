@@ -9,6 +9,7 @@ This repo includes a guided curriculum with repeatable labs in `docs/learning-pa
 - Learning Path overview: [`docs/learning-path/README.md`](docs/learning-path/README.md)
 - Exercise planning index: [`docs/learning-path/EXERCISES-INDEX.md`](docs/learning-path/EXERCISES-INDEX.md)
 - First lab: [`docs/learning-path/01-Setup.md`](docs/learning-path/01-Setup.md)
+- Ports and URLs contract: [`docs/ports-and-urls.md`](docs/ports-and-urls.md)
 
 Suggested order for VB6 developers:
 
