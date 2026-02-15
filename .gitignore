@@ -1,5 +1,45 @@
-﻿################################################################################
-# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+# Repository-wide ignores
 ################################################################################
 
-/.vs/VbToNet/CopilotIndices/17.14.1584.41681
+# Visual Studio
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Rider / JetBrains
+.idea/
+*.sln.iml
+
+# .NET build outputs
+[Bb]in/
+[Oo]bj/
+out/
+TestResults/
+*.nupkg
+*.snupkg
+
+# Logs / diagnostics
+*.log
+*.tmp
+
+# Docker / Compose transient files
+.docker/
+*.pid
+*.pid.lock
+
+# VB6 transient/project-local files (do NOT ignore .frm/.frx)
+*.vbp.local
+*.vbw
+*.exp
+*.lib
+*.obj
+*.ilk
+*.pdb
+*.aps
+
+# OS files
+.DS_Store
+Thumbs.db

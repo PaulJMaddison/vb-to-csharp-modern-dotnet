@@ -1,0 +1,6 @@
+<Project>
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net8.0'">
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+</Project>
