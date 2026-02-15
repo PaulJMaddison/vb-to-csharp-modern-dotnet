@@ -1,135 +1,58 @@
-# Database Migration Strategy and Tradeoffs
+# Database Migration Strategy
 
-Database modernisation is often the highest-risk part of VB6 platform migration.
+For VB6 modernisation, safest default is:
 
-> **Why this matters:** Most migration outages are data consistency or schema-change issues, not controller code issues.
+1. Keep the existing SQL Server schema first.
+2. Migrate application/service layers incrementally.
+3. Perform schema modernization in later phases.
 
-## Default recommendation: keep existing DB initially
+## Why keep the DB first
 
-For many teams, the safest path is:
+- Reduces concurrent change risk (app + schema together is high risk).
+- Preserves known reporting and integration behavior.
+- Allows direct output comparison between legacy and modern endpoints.
 
-- Keep existing SQL Server as primary data store.
-- Modernise application layers first.
-- Apply incremental, controlled schema evolution.
+## Phase model
 
-This avoids introducing app migration risk and database platform risk at the same time.
+## Phase 1: shared database, new app layer
 
-## Incremental schema changes with migrations
+- Legacy and modern services use the same DB.
+- New APIs read/write through controlled repositories.
+- Stored procedures can remain during transition.
 
-Use small, reversible schema updates tied to release cycles.
+## Phase 2: stabilize contracts and ownership
 
-Examples:
+- Define explicit domain/service ownership.
+- Reduce cross-module table coupling.
+- Add migration-safe tests around critical SQL behavior.
 
-- Add nullable columns before making them required.
-- Add indexes before routing heavy read traffic.
-- Introduce new tables for modern modules without breaking legacy queries.
+## Phase 3: selective schema modernization
 
-## Strangler patterns at database layer
+- Introduce additive schema changes first (new columns/tables).
+- Decompose oversized stored procedures where justified.
+- Implement migrations/versioning with rollback scripts.
 
-## 1) Views as compatibility layer
+## Tradeoffs: keep DB now vs migrate DB now
 
-Create views that present legacy-shaped data while new schema evolves.
+| Choice | Benefits | Risks |
+|---|---|---|
+| Keep DB first | Lower initial risk, faster first releases, easier parity checks | Carries legacy schema complexity longer |
+| Migrate DB early | Can clean data model sooner | High blast radius, integration break risk, longer lead time |
 
-- Legacy code continues reading stable shape.
-- New code can transition to new tables gradually.
+## Practical safeguards
 
-## 2) Stored procedure boundary
+- Version SQL scripts in source control.
+- Use backward-compatible schema changes first.
+- Add canary checks for critical queries.
+- Benchmark top 10 slow queries before/after each release.
+- Keep a tested restore/rollback procedure for DB changes.
 
-Use stored procedures as stable contract during transition.
+## When to modernize schema aggressively
 
-- Legacy and modern app paths call same procedures initially.
-- Later, procedure internals evolve with schema changes.
+Consider earlier DB modernization only if:
 
-## 3) Sidecar schema for new modules
+- Current schema blocks core product roadmap.
+- Performance issues cannot be solved at app/query layer.
+- Compliance/security requirements mandate data model changes.
 
-Create new schema (for example `modern.*`) for migrated modules.
-
-- Reduces collision with legacy naming and coupling.
-- Enables cleaner ownership boundaries.
-
-## Data sync vs single source of truth
-
-Prefer **single source of truth** where possible.
-
-### Single source of truth (recommended)
-
-- One authoritative write path per business entity.
-- Read models can be replicated/cached.
-- Lower reconciliation complexity.
-
-### Data sync/replication (use only when required)
-
-- Needed for staged cutovers or reporting isolation.
-- Requires explicit conflict handling and replay logic.
-- Adds operational burden and monitoring needs.
-
-## Tooling choices: EF Core migrations vs Flyway/DbUp vs manual SQL
-
-## EF Core migrations
-
-Good when app and schema are strongly coupled in .NET code.
-
-Pros:
-
-- Versioned with code.
-- Easy developer workflow for .NET teams.
-
-Cons:
-
-- Less ideal for multi-app shared DB governance.
-
-## Flyway or DbUp
-
-Good when you want SQL-first migration control across teams.
-
-Pros:
-
-- Explicit SQL scripts and ordered execution.
-- Easier for DBAs to review.
-
-Cons:
-
-- Requires disciplined script lifecycle and standards.
-
-## Manual SQL change process
-
-Can work in tightly controlled environments, but risky at scale.
-
-Pros:
-
-- Full control per change.
-
-Cons:
-
-- Prone to drift between environments.
-- Harder auditability and repeatability unless process is strict.
-
-## How to decide
-
-Use these decision drivers:
-
-- **Complexity:** number of interdependent modules and DB consumers.
-- **Risk tolerance:** acceptable production impact if migration fails.
-- **Downtime tolerance:** can you pause writes? for how long?
-- **Governance model:** app-team owned DB vs central DBA-managed DB.
-
-## What to avoid
-
-1. **Dual writes without strategy**
-   - Writing to two stores without idempotency and reconciliation leads to divergence.
-
-2. **Large irreversible DDL changes in one release**
-   - High rollback risk.
-
-3. **Skipping backup/restore rehearsal**
-   - Recovery becomes theoretical rather than operational.
-
-## Release safety checklist for DB changes
-
-- [ ] Migration scripts peer-reviewed.
-- [ ] Tested against production-like data volume.
-- [ ] Backward compatibility validated for legacy callers.
-- [ ] Rollback path documented and rehearsed.
-- [ ] Post-deploy verification queries prepared.
-
-Read next: [06-Release-and-Rollback.md](./06-Release-and-Rollback.md).
+Next: [06-Release-and-Rollback.md](./06-Release-and-Rollback.md)

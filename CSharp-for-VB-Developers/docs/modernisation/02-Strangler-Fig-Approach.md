@@ -1,178 +1,122 @@
-# Strangler Fig Approach (Deep Dive)
+# Strangler Fig Approach (Detailed)
 
-The Strangler Fig approach modernises legacy systems by surrounding the old system and replacing functionality in controlled slices.
+The strangler fig approach modernises legacy systems incrementally by placing a routing layer in front of old and new implementations, then moving capabilities slice-by-slice.
 
-Instead of replacing everything at once, you route selected requests to new services while the rest stays on legacy.
+## Why VB6 teams benefit
 
-> **Why this matters:** It lowers migration risk, keeps business continuity, and gives fast feedback on each slice.
+- Preserves production stability while modernising.
+- Avoids long periods without user-visible delivery.
+- Creates rollback options at route/module level.
+- Helps teams learn .NET and DevOps progressively.
 
-## Core idea
-
-1. Put a routing boundary in front of legacy and new systems.
-2. Move one module/workflow at a time.
-3. Validate behavior with telemetry and user feedback.
-4. Increase migrated scope over time.
-5. Decommission legacy modules when confidence is high.
-
-## Before/after diagrams
-
-### Before
+## Core pattern
 
 ```text
-Browser
-   |
-   v
-[IIS + Classic ASP]
-   |
-   v
-[COM Components] ---> [Shared Files]
-   |
-   v
-[SQL Server]
+               +----------------------+
+Request -----> | Gateway / Proxy      |
+               | (routing decisions)  |
+               +----+------------+----+
+                    |            |
+           legacy route     modern route
+                    |            |
+                    v            v
+              +-----------+  +----------------+
+              | VB6/ASP   |  | ASP.NET Core   |
+              | existing  |  | API/Worker     |
+              +-----------+  +----------------+
 ```
 
-### During migration (Strangler phase)
+The gateway becomes the seam where you control migration pace.
+
+## Migration phases
+
+## Phase 0 - Observe only
+
+- Introduce gateway with pass-through routing.
+- Add request IDs and basic latency/error logging.
+- Do not change business behavior.
 
 ```text
-Browser
-   |
-   v
-[Gateway / Reverse Proxy]
-   |                      \
-   v                       v
-[Legacy IIS + ASP]     [ASP.NET Core APIs]
-   |                       |
-   +-----------+-----------+
-               v
-          [SQL Server]
+Client -> Gateway(pass-through) -> Legacy only
 ```
 
-### After major slices migrated
+## Phase 1 - First vertical slice
+
+Select one bounded capability (example: customer search).
+
+- Build modern endpoint in ASP.NET Core.
+- Keep same contract shape where possible.
+- Route only a narrow path to the new service.
 
 ```text
-Browser
-   |
-   v
-[Gateway]
-   |
-   v
-[ASP.NET Core APIs + Workers]
-   |
-   v
-[SQL Server + New Data Services]
+/legacy/*   -> Legacy IIS
+/api/customers/search -> New API
 ```
 
-## Routing boundary patterns
+## Phase 2 - Side-by-side verification
 
-## 1) Reverse proxy/gateway (YARP)
+- Shadow traffic or replay representative requests.
+- Compare output, timing, and error behavior.
+- Fix semantic mismatches before broad rollout.
 
-Use a single entry point that forwards requests to legacy or modern backends.
+```text
+                    +--> Legacy (baseline)
+Gateway (sample %) -|
+                    +--> New API (candidate)
 
-Typical benefits:
+Compare: status, payload, key fields, latency
+```
 
-- Central routing control.
-- One place for auth, correlation IDs, and rate limiting (later).
-- Ability to flip module routes without changing clients.
+## Phase 3 - Controlled expansion
 
-Example module route intent:
+- Move adjacent routes of same bounded context.
+- Add feature flags for fast switchback.
+- Keep DB schema stable while app logic migrates.
 
-- `/orders/*` -> new API
-- `/invoices/*` -> legacy app
-- `/customers/*` -> split by endpoint maturity
+## Phase 4 - Legacy retirement
 
-## 2) Path-based routing per module
+- Route all traffic for migrated context to modern service.
+- Remove dead legacy endpoints/components.
+- Archive runbooks and release notes.
 
-Path-based routing is the simplest strangler boundary.
+## How to pick the first slice
 
-Example strategy:
+Prefer modules that are:
 
-- Phase 1: `/api/customers/*` -> new service; all else legacy.
-- Phase 2: `/api/orders/*` -> new service.
-- Phase 3: `/reporting/*` -> new service.
+- High value (frequent user pain or revenue impact).
+- Medium complexity (not deepest legacy coupling first).
+- Independently releasable.
+- Observable (easy to measure success/failure).
 
-Keep route ownership explicit in a migration map.
+Avoid picking cross-cutting foundational modules first.
 
-## Step-by-step workflow
+## Suggested routing model
 
-## Step 1: Pick a first slice
+```text
+                    +---------------------------+
+                    |  Reverse Proxy Gateway    |
+                    |---------------------------|
+Incoming route      | Rule                      |
+--------------------+---------------------------+
+/legacy/*           | -> Legacy IIS site        |
+/api/customers/*    | -> Customer API           |
+/api/invoices/*     | -> Invoice API            |
+/jobs/*             | -> Worker admin endpoints |
+```
 
-Best first slices are:
+## Guardrails for each migrated slice
 
-- High pain but bounded logic.
-- Low cross-module coupling.
-- Clear success metrics.
+- Contract tests between gateway and backend.
+- Health endpoint and dependency checks.
+- Structured logging with correlation IDs.
+- Feature flag + rollback path documented.
+- Runbook updated before go-live.
 
-Good examples: customer lookup, order status endpoint, read-only reporting API.
+## Definition of done for a slice
 
-## Step 2: Build parity tests and acceptance criteria
+- [ ] Route cut-over performed in production safely.
+- [ ] p95 latency and error rate meet baseline target.
+- [ ] Rollback tested in non-prod.
+- [ ] Legacy path decommission decision recorded.
 
-Define expected outputs (including edge cases) from legacy behavior.
-
-- Golden test data for representative requests.
-- Field-level comparison where feasible.
-- Explicit handling for known legacy quirks.
-
-## Step 3: Implement new slice behind gateway route
-
-- Create ASP.NET Core module/API.
-- Route only target path to new module.
-- Keep non-target paths on legacy.
-
-## Step 4: Controlled rollout
-
-- Start with internal users or one business unit.
-- Monitor error rate + latency + business KPIs.
-- Expand traffic gradually.
-
-## Step 5: Cut over and decommission
-
-After stable period:
-
-- Move all traffic for the slice to new path.
-- Remove duplicate legacy code.
-- Update runbooks and support docs.
-
-## Practical slice migration examples
-
-## Example A: Customer search
-
-- Legacy: `customers.asp?query=...`
-- New: `/api/customers/search?q=...`
-- Gateway:
-  - UI path can stay legacy initially.
-  - API path for search goes new first.
-
-Outcome: measurable latency and reliability improvement with minimal user workflow change.
-
-## Example B: Invoice status
-
-- Legacy invoice generation remains unchanged.
-- New API serves invoice status read model.
-- Support team gets faster status checks without touching invoice posting logic.
-
-## Anti-patterns (and why they fail)
-
-1. **Big-bang branch for 9+ months**
-   - Fails due to drift, merge risk, and delayed feedback.
-
-2. **No explicit routing ownership**
-   - Causes accidental traffic movement and hard-to-debug incidents.
-
-3. **Dual writes without reconciliation strategy**
-   - Creates silent data divergence.
-
-4. **Migrating hardest module first**
-   - Delays wins and kills confidence.
-
-5. **No telemetry before cutover**
-   - You cannot prove regression or improvement.
-
-## Quick readiness checklist for each slice
-
-- [ ] Route boundary defined.
-- [ ] Parity tests agreed.
-- [ ] Baseline metrics captured.
-- [ ] Rollback toggle available.
-- [ ] Support team informed with runbook.
-
-Read next: [03-Local-Dev-Setup.md](./03-Local-Dev-Setup.md).
+Next: [03-Local-Dev-Setup.md](./03-Local-Dev-Setup.md)

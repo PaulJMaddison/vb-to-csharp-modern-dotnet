@@ -1,86 +1,91 @@
-# Discovery Checklist for VB6 Modernisation
+# Discovery Checklist
 
-Discovery is where most modernisation success is won or lost. Do this before committing to migration timelines.
+Use this before writing modern code. The objective is to remove hidden coupling and release surprises.
 
-> **Why this matters:** If you miss one scheduled job, one printer dependency, or one auth edge case, your first release can fail regardless of code quality.
+## 1) Business process mapping
 
-## 1) System inventory checklist
+Capture each critical flow end-to-end:
 
-Capture this in a spreadsheet or backlog with owner + criticality.
+- Entry point (screen/page/batch file/API).
+- Users and timing (daily close, month-end, etc.).
+- Inputs/outputs (files, DB rows, emails, reports).
+- Failure impact (financial, compliance, operations).
 
-### Applications and modules
+### Output
 
-- [ ] Public web apps, internal web apps, admin portals.
-- [ ] Module list (orders, invoicing, customer maintenance, reporting, etc.).
-- [ ] Traffic estimates by module (daily users, peak times).
-- [ ] Known pain points (timeouts, frequent defects, brittle pages).
+- A ranked list of candidate migration slices by business value and risk.
 
-### COM and legacy components
+## 2) Application and runtime inventory
 
-- [ ] COM DLL/EXE components and registration dependencies.
-- [ ] COM+ packages and server-level configuration.
-- [ ] Shared utility libraries used by multiple apps.
-- [ ] 32-bit/64-bit assumptions.
+Record the real estate, not the desired architecture:
 
-### Database assets
+- IIS sites/app pools and bindings.
+- VB6 COM components and registrations.
+- Scheduled Tasks / Windows Services / batch executables.
+- External dependencies (SMTP, file shares, SOAP/REST, printers).
 
-- [ ] SQL Server instances, databases, and linked servers.
-- [ ] Tables, views, stored procedures, SQL Agent jobs.
-- [ ] Data ownership boundaries (which app owns which tables).
-- [ ] Backup/restore process and current RPO/RTO expectations.
+### Output
 
-### Integrations
+- Versioned inventory document with owners.
 
-- [ ] File shares, FTP/SFTP, SMTP, printer servers.
-- [ ] External APIs and authentication methods.
-- [ ] Batch imports/exports and fixed file formats.
-- [ ] Partner dependencies and SLA constraints.
+## 3) Database usage analysis
 
-## 2) Risk checklist
+For each module, identify:
 
-Focus on areas that break quietly.
+- Tables/views/stored procedures touched.
+- Read vs write behavior.
+- Transaction boundaries.
+- Lock/contention hotspots.
 
-- [ ] **Authentication/authorisation:** AD groups, custom cookies, hard-coded role checks.
-- [ ] **Batch jobs:** nightly jobs, month-end processing, retry behavior.
-- [ ] **Scheduled tasks:** Windows Task Scheduler scripts and credentials.
-- [ ] **Printing:** direct printer calls, spooler assumptions, layout dependencies.
-- [ ] **File shares:** UNC paths, network permissions, locked files.
-- [ ] **Time-sensitive logic:** timezone, daylight saving, business calendar cutoffs.
+### Output
 
-## 3) Observability baseline plan
+- Data dependency matrix per module.
 
-Before first migration slice, measure what “normal” looks like.
+## 4) Operational baseline
 
-### Minimum telemetry for each critical module
+Measure current behavior before migration:
 
-- [ ] Request count (throughput).
-- [ ] Error rate (4xx/5xx or functional failure count).
-- [ ] Latency (p50/p95/p99).
-- [ ] Dependency failures (DB timeout, external service timeout).
+- Request throughput and p95 latency.
+- Error rates and retry rates.
+- Batch duration and failure frequency.
+- Deployment frequency and mean time to recover.
 
-### Practical baseline process
+### Output
 
-1. Identify top 3 business-critical workflows.
-2. Capture 2–4 weeks of baseline metrics.
-3. Define alert thresholds from real baseline (not guesswork).
-4. Store dashboard links in runbook documentation.
+- Baseline metrics dashboard or spreadsheet.
 
-### Example baseline table
+## 5) Security and compliance review
 
-| Workflow | Current Error Rate | Current p95 Latency | Owner | Migration Target |
-|---|---:|---:|---|---|
-| Create order | 1.8% | 2200 ms | Sales platform | <1.0%, <1500 ms |
-| Invoice run | 0.7% | 6 min batch | Finance ops | <0.5%, <4 min |
-| Customer search | 2.5% | 3500 ms | Support app | <1.2%, <1800 ms |
+Document:
 
-## 4) Discovery outputs (definition of ready)
+- Authentication/authorization model.
+- Secret storage approach.
+- Audit requirements and retention.
+- Network constraints (DMZ, firewall rules).
 
-Do not start migration implementation until you have:
+### Output
 
-- [ ] Current architecture diagram.
-- [ ] Prioritised module list with business value and risk.
-- [ ] First migration slice selected and scoped.
-- [ ] Observability baseline and owners assigned.
-- [ ] Rollback assumptions documented for first release.
+- Minimum security controls for new services.
 
-Read next: [02-Strangler-Fig-Approach.md](./02-Strangler-Fig-Approach.md).
+## 6) Team readiness
+
+Confirm:
+
+- Who owns architecture decisions.
+- On-call and support model.
+- CI/CD ownership.
+- Training needs (C#, ASP.NET Core, observability).
+
+### Output
+
+- Skill/risk heatmap and onboarding plan.
+
+## Definition of “ready for first slice”
+
+- [ ] Top 3 business-critical flows mapped.
+- [ ] Current runtime inventory complete.
+- [ ] DB dependency map for first slice complete.
+- [ ] Baseline metrics captured.
+- [ ] Rollback owner + process identified.
+
+Next: [02-Strangler-Fig-Approach.md](./02-Strangler-Fig-Approach.md)
