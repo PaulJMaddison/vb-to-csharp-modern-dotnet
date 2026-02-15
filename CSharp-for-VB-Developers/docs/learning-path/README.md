@@ -1,76 +1,69 @@
-# Learning Path: VB6/VB Windows Developers to Modern C#/.NET 8
+# Learning Path: VB6/VB to Modern C#/.NET
 
-This learning path turns the sample projects in this repository into a repeatable training program.
+Use this folder as a structured training track for teams moving from VB6 or older VB WinForms apps to modern .NET 8 services and web apps.
 
-Use it in three modes:
+## How to use this repo for training
 
-- **Self-study**: one developer moving module-by-module.
-- **Team upskilling**: a small cohort doing 2-3 labs per week.
-- **Trainer-led workshop**: instructor demos first, then participants complete exercises.
+1. Start with setup and run at least one app + one API locally.
+2. Work through each lab in order (01 → 06) and record outcomes in your team notes.
+3. Keep each lab practical: run commands, validate endpoints, and discuss migration tradeoffs.
+4. Use the exercise index to pick optional labs based on role (API dev, tester, platform engineer).
 
-> VB6 mapping: think of this as a guided “upgrade plan” with checkpoints, not just a code dump.
+Useful references:
 
-## How to use this learning path
+- Exercises index: [EXERCISES-INDEX.md](./EXERCISES-INDEX.md)
+- Gateway pattern notes: [../patterns/reverse-proxy-gateway.md](../patterns/reverse-proxy-gateway.md)
+- Testing notes: [../patterns/testing-unit-vs-integration.md](../patterns/testing-unit-vs-integration.md)
 
-1. Start with [01-Getting-Set-Up](./01-Getting-Set-Up.md).
-2. Follow labs in numeric order unless your trainer selects a custom track.
-3. For each exercise, complete:
-   - goal
-   - prerequisites
-   - explicit steps
-   - expected outcome
-   - verification
-   - pitfalls
-   - stretch goal
-4. Track completion with checklists in each module.
-5. Record notes in your branch/PR after each lab.
+## Recommended schedules
 
-## Suggested timelines
+### 1-week intensive (bootcamp style)
 
-### 1-week crash course (intensive)
+- **Day 1**: 01-Setup + 02-CSharp-Quick-Wins
+- **Day 2**: 03-WebApi-Basics-Lab
+- **Day 3**: 04-Auth-Lab
+- **Day 4**: 05-Testing-Lab
+- **Day 5**: 06-Gateway-Strangler-Lab + demo
 
-- **Day 1**: 01 setup + 02 C# quick wins
-- **Day 2**: 03 Web API basics
-- **Day 3**: 04 auth + 05 integration testing
-- **Day 4**: 06 gateway + 07 data access
-- **Day 5**: 08 UI + 09 worker + capstone kickoff
+Best for teams that can dedicate full-time learning hours.
 
-Best for experienced developers with dedicated time.
+### 4-week part-time plan
 
-### 4-week ramp-up (balanced)
+- **Week 1**: 01 + 02
+- **Week 2**: 03
+- **Week 3**: 04 + 05
+- **Week 4**: 06 + modernization review
 
-- **Week 1**: 01 + 02 + selected 03 exercises
-- **Week 2**: complete 03 + 04
-- **Week 3**: 05 + 06 + 07
-- **Week 4**: 08 + 09 + 10 capstone
+Best for delivery teams learning while continuing normal sprint work.
 
-Best for teams learning while delivering features.
+### 8-week gradual adoption plan
 
-### 8-week program (deep confidence)
+- **Weeks 1-2**: Setup, C# fundamentals, coding standards
+- **Weeks 3-4**: Web API basics + first internal endpoint
+- **Weeks 5-6**: Auth + test automation baseline
+- **Weeks 7-8**: Gateway strangler slice and rollout checklist
 
-- **Weeks 1-2**: foundation (01-03)
-- **Weeks 3-4**: auth/testing (04-05)
-- **Weeks 5-6**: architecture/data (06-07)
-- **Week 7**: web UI and worker patterns (08-09)
-- **Week 8**: capstone + code review + retrospective
+Best for larger teams or environments with strict release controls.
 
-Best for trainer-led internal academies.
+## How to run the lab stack (gateway + APIs)
 
-## Run the lab locally (gateway + APIs + web apps)
+From repo root (`CSharp-for-VB-Developers`):
 
-From repository root (`CSharp-for-VB-Developers/`):
+### Option A: start all with scripts
 
-```bash
-dotnet build CSharpForVBDevelopers.sln
-dotnet test src/12-IntegrationTests/IntegrationTests.csproj
+- Windows PowerShell:
+
+```powershell
+./scripts/run-all.ps1
 ```
 
-Start core backend lab services:
+- Linux/macOS:
 
-- **Windows PowerShell**: `./scripts/run-all.ps1`
-- **bash (Linux/macOS/WSL)**: `./scripts/run-all.sh`
+```bash
+./scripts/run-all.sh
+```
 
-Manual start (three terminals):
+### Option B: run services manually (3 terminals)
 
 ```bash
 dotnet run --project src/08-WebApi-WithAuth/WebApiWithAuth.csproj
@@ -78,60 +71,12 @@ dotnet run --project src/11-WebApi-CleanArchitecture/WebApiClean.csproj
 dotnet run --project src/13-ReverseProxy-Gateway/ReverseProxyGateway.csproj
 ```
 
-Useful URLs:
-
-- Gateway: `http://localhost:5000`
-- Auth API Swagger: `http://localhost:5222/swagger`
-- Clean API Swagger: `http://localhost:5111/swagger`
-- Gateway forwarded API sample: `http://localhost:5000/api/customers`
-
-Optional web UI labs:
+### Smoke-check endpoints
 
 ```bash
-dotnet run --project src/03-WebApp-RazorPages/WebAppRazorPages.csproj
-dotnet run --project src/07-MvcWebApp/MvcWebApp.csproj
-dotnet run --project src/06-BlazorWebApp/BlazorWebApp.csproj
+curl http://localhost:5222/swagger
+curl http://localhost:5111/health
+curl http://localhost:5000/api/customers
 ```
 
-## Check progress
-
-Use both:
-
-- [EXERCISES-INDEX.md](./EXERCISES-INDEX.md) for planning.
-- Checklist section inside each module.
-
-Recommended completion rule:
-
-- Mark exercise done only when **verification steps pass**.
-- If blocked, note the blocker and move to next exercise.
-
-## Questions and improvements
-
-Suggested internal process:
-
-1. Open an issue (or team ticket) with:
-   - lab file name
-   - exact step number
-   - observed vs expected behavior
-   - logs/screenshot/error output
-2. Propose improvements via small PRs:
-   - one lab tweak per PR when possible
-   - include before/after wording and reason
-3. Ask for review from:
-   - one trainer/lead
-   - one learner who recently used the lab
-
-If your team does not use GitHub issues, use your internal tracker and link back to file paths.
-
-## Module checklist
-
-- [ ] 01 Getting Set Up
-- [ ] 02 C# Quick Wins
-- [ ] 03 Web API Basics Lab
-- [ ] 04 Auth Lab
-- [ ] 05 Integration Testing Lab
-- [ ] 06 Gateway Strangler Lab
-- [ ] 07 Data Access Lab
-- [ ] 08 Web UI Lab
-- [ ] 09 Worker/Background Jobs Lab
-- [ ] 10 Capstone Project
+If ports are occupied, stop old processes or update launch settings before continuing.
