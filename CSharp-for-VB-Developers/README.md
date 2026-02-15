@@ -21,6 +21,14 @@ Suggested order for VB6 developers:
 7. Worker/background jobs
 8. Capstone modernization slice
 
+## Contributing / Standards
+
+If you are adding samples, labs, or modernisation guidance, start with:
+
+- [`CONTRIBUTING.md`](CONTRIBUTING.md)
+- [`docs/standards/definition-of-done.md`](docs/standards/definition-of-done.md)
+- [`docs/standards/style-and-structure.md`](docs/standards/style-and-structure.md)
+
 ## Prerequisites
 
 - .NET 8 SDK
