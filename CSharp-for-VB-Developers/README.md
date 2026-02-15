@@ -126,3 +126,7 @@ See `docs/patterns/`:
 - data-access-ef-vs-dapper.md
 - testing-unit-vs-integration.md
 - reverse-proxy-gateway.md
+
+## Tutorials
+
+- [VB6 to C# and Modern .NET Tutorial](docs/tutorials/VB6-to-CSharp-Tutorial.md)
