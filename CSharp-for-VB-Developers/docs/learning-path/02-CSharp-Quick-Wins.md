@@ -24,7 +24,7 @@ Build confidence with high-value C# syntax and patterns that immediately replace
 - Learner can map each construct back to old VB-style patterns.
 - Console app runs without modification errors.
 
-## Common VB6 pitfalls
+## Common VB.NET pitfalls
 
 - Overusing mutable globals instead of scoped variables.
 - Ignoring nullability warnings.

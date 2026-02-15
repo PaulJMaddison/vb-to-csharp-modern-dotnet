@@ -1,6 +1,6 @@
 # 12-to-24 Month Modernisation Roadmap
 
-This roadmap gives VB6 teams a practical sequencing model. Adjust timings to team size and risk tolerance.
+This roadmap gives VB.NET teams a practical sequencing model. Adjust timings to team size and risk tolerance.
 
 ## Months 0-3: foundation and first slice
 
@@ -43,7 +43,7 @@ This roadmap gives VB6 teams a practical sequencing model. Adjust timings to tea
 - Migrate high-complexity modules.
 - Reduce shared DB coupling between old/new domains.
 - Consolidate deployment pipelines.
-- Retire redundant IIS/VB6 components.
+- Retire redundant IIS/VB.NET components.
 
 ### Exit criteria
 

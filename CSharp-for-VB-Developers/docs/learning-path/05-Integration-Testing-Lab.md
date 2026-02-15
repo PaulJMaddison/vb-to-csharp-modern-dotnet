@@ -4,7 +4,7 @@ Primary project: `src/12-IntegrationTests`.
 
 Goal: automate endpoint checks through the real ASP.NET Core pipeline (not manual clicking).
 
-VB6 mapping: this replaces repetitive manual test runs and regression spreadsheets.
+VB.NET mapping: this replaces repetitive manual test runs and regression spreadsheets.
 
 ## What is `WebApplicationFactory`?
 

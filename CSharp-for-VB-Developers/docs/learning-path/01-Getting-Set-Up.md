@@ -65,7 +65,7 @@ dotnet run --project src/04-WebApi-Minimal/WebApiMinimal.csproj
 - `docs/learning-path`: guided labs (this curriculum).
 - `scripts/run-all.*`: starts main APIs + gateway for multi-service labs.
 
-VB6 mapping:
+VB.NET mapping:
 
 - `*.sln` is your “workspace shell” (like a group project).
 - each `*.csproj` is a deployable unit/library (roughly like separate VB projects/components).
@@ -116,7 +116,7 @@ Then restart the app.
 - Copy the URL printed in terminal and paste manually.
 - Ensure app started in `Development` environment.
 
-## Common pitfalls (VB6 mindset gotchas)
+## Common pitfalls (VB.NET mindset gotchas)
 
 - Expecting one EXE to contain everything: modern apps are intentionally split by concern.
 - Expecting UI app startup model for APIs: web hosts run continuously and listen on ports.

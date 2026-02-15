@@ -15,7 +15,7 @@ public class CustomerService(ICustomerRepository repository, AppDbContext dbCont
 
         await repository.AddAsync(customer, cancellationToken);
 
-        // VB6 comparison: instead of connection.BeginTrans + multiple SQL statements,
+        // VB.NET comparison: instead of connection.BeginTrans + multiple SQL statements,
         // SaveChanges groups tracked operations into one transactional unit-of-work.
         await dbContext.SaveChangesAsync(cancellationToken);
         return customer;

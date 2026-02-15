@@ -43,7 +43,7 @@ dotnet run --project src/05-WorkerService/WorkerService.csproj
 **Verification**
 - Console logs show repeated timestamps and API response status.
 
-**Common pitfalls (VB6 gotchas)**
+**Common pitfalls (VB.NET gotchas)**
 - Using blocking calls (`.Result`) in async loop.
 - Ignoring cancellation token in delays or HTTP calls.
 

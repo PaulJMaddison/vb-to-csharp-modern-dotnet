@@ -1,6 +1,6 @@
 # C#/.NET Application Types (VB Windows Developer View)
 
-Use this as a decision guide when moving from VB6/VB desktop habits to modern .NET architecture.
+Use this as a decision guide when moving from VB.NET/VB desktop habits to modern .NET architecture.
 
 ## Windows Desktop
 

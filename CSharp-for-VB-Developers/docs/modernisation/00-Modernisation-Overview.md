@@ -1,6 +1,6 @@
-# Modernisation Overview (for VB6 Teams)
+# Modernisation Overview (for VB.NET Teams)
 
-This playbook is for teams running stable VB6/Classic ASP systems that now need safer releases, better observability, and faster feature delivery.
+This playbook is for teams running stable VB.NET applications on .NET Framework 4.5+ (often with System.Web-era web apps) that now need safer releases, better observability, and faster feature delivery.
 
 ## Modernisation goals
 
@@ -11,9 +11,9 @@ This playbook is for teams running stable VB6/Classic ASP systems that now need 
 
 ## What “modernisation” means in practice
 
-For most VB6 estates, modernisation is **not** a rewrite. It is a staged migration where:
+For most VB.NET estates, modernisation is **not** a rewrite. It is a staged migration where:
 
-1. Existing IIS apps and SQL Server remain in place.
+1. Existing IIS-hosted apps (including System.Web MVC/Web Forms where present) and SQL Server remain in place.
 2. New functionality is delivered in ASP.NET Core APIs/workers.
 3. A gateway routes selected paths from legacy to new services.
 4. Modules move one-by-one (strangler fig pattern).
@@ -39,7 +39,7 @@ Users/Browsers
       |               |
       v               v
 Legacy IIS      ASP.NET Core APIs
-(VB6/ASP)        + Worker Services
+(VB.NET/.NET Fx)    + Worker Services
       \               /
        +-------------+
              |

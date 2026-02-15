@@ -46,7 +46,7 @@ dotnet build src/09-DataAccess-EFCore/DataAccessEfCore.csproj
 dotnet test src/12-IntegrationTests/IntegrationTests.csproj
 ```
 
-**Common pitfalls (VB6 gotchas)**
+**Common pitfalls (VB.NET gotchas)**
 - Forgetting async suffix and cancellation token conventions.
 - Writing DB-style loops instead of declarative LINQ.
 
@@ -83,7 +83,7 @@ public Task<IReadOnlyList<CustomerRecord>> GetCustomersFromStubAsync(IReadOnlyLi
 dotnet build src/10-DataAccess-Dapper/DataAccessDapper.csproj
 ```
 
-**Common pitfalls (VB6 gotchas)**
+**Common pitfalls (VB.NET gotchas)**
 - Mixing production data access and teaching stubs without clear naming.
 - Assuming Dapper manages connections automatically like EF context lifetime.
 
@@ -114,7 +114,7 @@ dotnet build src/10-DataAccess-Dapper/DataAccessDapper.csproj
 **Verification**
 - Peer/trainer review of your decision note.
 
-**Common pitfalls (VB6 gotchas)**
+**Common pitfalls (VB.NET gotchas)**
 - Searching for one “always best” data tool.
 - Ignoring maintainability and onboarding cost.
 

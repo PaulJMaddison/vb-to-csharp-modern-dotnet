@@ -2,7 +2,7 @@
 
 The strangler fig approach modernises legacy systems incrementally by placing a routing layer in front of old and new implementations, then moving capabilities slice-by-slice.
 
-## Why VB6 teams benefit
+## Why VB.NET teams benefit
 
 - Preserves production stability while modernising.
 - Avoids long periods without user-visible delivery.
@@ -21,7 +21,7 @@ Request -----> | Gateway / Proxy      |
                     |            |
                     v            v
               +-----------+  +----------------+
-              | VB6/ASP   |  | ASP.NET Core   |
+              | VB.NET/ASP   |  | ASP.NET Core   |
               | existing  |  | API/Worker     |
               +-----------+  +----------------+
 ```

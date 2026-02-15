@@ -20,7 +20,7 @@ Capture each critical flow end-to-end:
 Record the real estate, not the desired architecture:
 
 - IIS sites/app pools and bindings.
-- VB6 COM components and registrations.
+- VB.NET/.NET Framework dependencies (System.Web, COM interop, GAC assemblies, machine.config assumptions).
 - Scheduled Tasks / Windows Services / batch executables.
 - External dependencies (SMTP, file shares, SOAP/REST, printers).
 

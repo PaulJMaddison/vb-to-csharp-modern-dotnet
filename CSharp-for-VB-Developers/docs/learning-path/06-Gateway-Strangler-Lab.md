@@ -13,7 +13,7 @@ Practice routing multiple backend APIs behind a single gateway and understand ho
 2. Call downstream APIs directly first (baseline).
 3. Call equivalent routes through gateway (`http://localhost:5000/...`).
 4. Review gateway route configuration and map each route to its destination service.
-5. Discuss a real VB6 module that could be migrated behind a gateway-first facade.
+5. Discuss a real VB.NET module that could be migrated behind a gateway-first facade.
 
 ## Verify
 
@@ -21,7 +21,7 @@ Practice routing multiple backend APIs behind a single gateway and understand ho
 - You can identify where route mapping is configured.
 - Team can describe one concrete strangler slice candidate.
 
-## Common VB6 pitfalls
+## Common VB.NET pitfalls
 
 - Attempting “big-bang rewrite” instead of incremental strangler slices.
 - Coupling clients directly to many backend services without a stable edge API.

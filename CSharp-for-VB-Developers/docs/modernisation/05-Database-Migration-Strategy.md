@@ -1,16 +1,17 @@
 # Database Migration Strategy
 
-For VB6 modernisation, safest default is:
+For VB.NET modernisation, safest default is:
 
 1. Keep the existing SQL Server schema first.
 2. Migrate application/service layers incrementally.
 3. Perform schema modernization in later phases.
 
-## Why keep the DB first
+## Why keep the DB first (recommended default)
 
 - Reduces concurrent change risk (app + schema together is high risk).
 - Preserves known reporting and integration behavior.
 - Allows direct output comparison between legacy and modern endpoints.
+- Reflects common enterprise reality: database is often shared across multiple .NET Framework apps and reports, so changing it first increases blast radius.
 
 ## Phase model
 

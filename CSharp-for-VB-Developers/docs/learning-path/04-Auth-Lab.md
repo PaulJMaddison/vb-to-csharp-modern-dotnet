@@ -21,7 +21,7 @@ Learn token-based authentication in ASP.NET Core and practice calling protected 
 - Protected endpoint returns success with token and unauthorized without token.
 - You can explain authentication vs authorization in one sentence each.
 
-## Common VB6 pitfalls
+## Common VB.NET pitfalls
 
 - Treating auth as a UI concern rather than API middleware/pipeline concern.
 - Passing credentials repeatedly instead of short-lived token flow.

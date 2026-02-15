@@ -1,6 +1,6 @@
-# Windows vs Web Development (for VB6/VB WinForms Developers)
+# Windows vs Web Development (for VB.NET/VB WinForms Developers)
 
-If you built VB6 or WinForms apps for years, you already understand event-driven development, UI state, and business logic flow.
+If you built VB.NET or WinForms apps for years, you already understand event-driven development, UI state, and business logic flow.
 
 What changes on the web is **where state lives**, **how execution is triggered**, and **how many users hit the same code at once**.
 
@@ -10,7 +10,7 @@ This guide explains the mental model shift in practical terms.
 
 ## 1) The fundamental difference: stateful desktop vs stateless web
 
-### Windows desktop apps (VB6/WinForms): stateful, long-lived process
+### Windows desktop apps (VB.NET/WinForms): stateful, long-lived process
 
 In a desktop app:
 
@@ -38,11 +38,11 @@ In short: **context is lost between requests unless you store it explicitly**.
 
 ---
 
-## 2) VB6 concept mapping to web equivalents
+## 2) VB.NET concept mapping to web equivalents
 
 ### Form events (`Form_Load`, `CommandButton_Click`) → HTTP handlers/endpoints
 
-**VB6 thinking:** "When form loads, initialize controls. When button clicks, run code."
+**VB.NET thinking:** "When form loads, initialize controls. When button clicks, run code."
 
 **Web equivalent:**
 
@@ -92,7 +92,7 @@ Desktop globals are often convenient, but in web:
 
 ---
 
-## 3) HTTP basics in VB6-friendly terms
+## 3) HTTP basics in VB.NET-friendly terms
 
 Think of HTTP as a strict message protocol:
 
@@ -290,7 +290,7 @@ Design for cache misses/expirations; cache is a performance layer, not primary t
 
 ---
 
-## 7) Practical gotchas VB6 developers often hit
+## 7) Practical gotchas VB.NET developers often hit
 
 ### Concurrency: many requests run simultaneously
 
@@ -363,7 +363,7 @@ Then replay with tools (browser dev tools, curl, Postman, integration tests).
 
 ## Practical mental model to carry forward
 
-When moving from VB6/WinForms to web, use this checklist:
+When moving from VB.NET/WinForms to web, use this checklist:
 
 - What is the request boundary?
 - Where is state stored between requests?
