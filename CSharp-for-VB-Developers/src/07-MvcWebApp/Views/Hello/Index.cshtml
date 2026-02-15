@@ -1,0 +1,9 @@
+@model MvcWebApp.Models.GreetingModel
+@{
+    ViewData["Title"] = "Hello";
+}
+
+<section>
+    <h1>@Model.Message</h1>
+    <p>Current time: @(((DateTime)ViewData["CurrentTime"]!).ToString("F"))</p>
+</section>
