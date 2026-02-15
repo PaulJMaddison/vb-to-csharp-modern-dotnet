@@ -2,14 +2,8 @@ using System.Collections.Concurrent;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// OpenAPI/Swagger is common for Web APIs (documentation + testing UI).
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
 var app = builder.Build();
 
-app.UseSwagger();
-app.UseSwaggerUI();
 
 var todos = new ConcurrentDictionary<int, TodoItem>();
 var id = 0;
