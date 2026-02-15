@@ -126,3 +126,18 @@ See `docs/patterns/`:
 - data-access-ef-vs-dapper.md
 - testing-unit-vs-integration.md
 - reverse-proxy-gateway.md
+
+## Modernisation Playbook
+
+For teams modernising VB6/Classic ASP systems incrementally, see `docs/modernisation/`:
+
+1. [00-Modernisation-Overview](docs/modernisation/00-Modernisation-Overview.md)
+2. [01-Discovery-Checklist](docs/modernisation/01-Discovery-Checklist.md)
+3. [02-Strangler-Fig-Approach](docs/modernisation/02-Strangler-Fig-Approach.md)
+4. [03-Local-Dev-Setup](docs/modernisation/03-Local-Dev-Setup.md)
+5. [04-Hosting-WebApis](docs/modernisation/04-Hosting-WebApis.md)
+6. [05-Database-Migration-Strategy](docs/modernisation/05-Database-Migration-Strategy.md)
+7. [06-Release-and-Rollback](docs/modernisation/06-Release-and-Rollback.md)
+8. [07-12-to-24-Month-Roadmap](docs/modernisation/07-12-to-24-Month-Roadmap.md)
+
+Suggested reading order is the numbered order above: start with discovery and strangler strategy, then implementation/hosting/data, then rollout and roadmap.
