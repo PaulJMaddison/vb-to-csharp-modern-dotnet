@@ -2,23 +2,63 @@
 
 Small, runnable .NET 8 samples for experienced VB6/VB Windows developers learning practical modern C#.
 
+## Learning Path / Workshops (Start Here)
+
+This repo includes a guided curriculum with repeatable labs in `docs/learning-path`.
+
+- Learning Path overview: [`docs/learning-path/README.md`](docs/learning-path/README.md)
+- Exercise planning index: [`docs/learning-path/EXERCISES-INDEX.md`](docs/learning-path/EXERCISES-INDEX.md)
+
+Suggested order for VB6 developers:
+
+1. Setup and first run
+2. C# quick wins
+3. Web API basics
+4. Auth + integration testing
+5. Gateway + data access patterns
+6. Web UI options (Razor/MVC/Blazor)
+7. Worker/background jobs
+8. Capstone modernization slice
+
 ## Prerequisites
 
 - .NET 8 SDK
 - Visual Studio 2022 (recommended) or VS Code
 - Optional for database demos: Docker Desktop
 
-## Quick start
+## Quickstart: run the lab
+
+Build + tests:
 
 ```bash
 dotnet build CSharpForVBDevelopers.sln
 dotnet test src/12-IntegrationTests/IntegrationTests.csproj
 ```
 
-Run gateway + APIs together:
+Start gateway + key APIs:
 
 - Windows: `./scripts/run-all.ps1`
 - Linux/Mac: `./scripts/run-all.sh`
+
+Manual start (three terminals):
+
+```bash
+dotnet run --project src/08-WebApi-WithAuth/WebApiWithAuth.csproj
+dotnet run --project src/11-WebApi-CleanArchitecture/WebApiClean.csproj
+dotnet run --project src/13-ReverseProxy-Gateway/ReverseProxyGateway.csproj
+```
+
+Open Swagger:
+
+- Auth API: `http://localhost:5222/swagger`
+- Clean API: `http://localhost:5111/swagger`
+
+Hit sample endpoint:
+
+```bash
+curl http://localhost:5111/health
+curl http://localhost:5000/api/customers
+```
 
 ## Local infrastructure (optional)
 
@@ -32,16 +72,16 @@ SQL Server endpoint: `localhost,14333` (user: `sa`, password: `Your_password123`
 
 ## Project catalog
 
-### 01-WinFormsCSharp (`src/01-WinFormsCSharp`)
+### 01-WinFormsCSharp (`src/01-WinFormsCSharp`) - Windows-only
 - **What**: Basic WinForms app in C#.
 - **When to use**: Desktop line-of-business tools.
-- **Run**: `dotnet run --project src/01-WinFormsCSharp/WinFormsCSharp.csproj` (Windows only)
+- **Run**: `dotnet run --project src/01-WinFormsCSharp/WinFormsCSharp.csproj`
 - **Look for**: Event wiring, C# syntax differences from VB.
 
-### 01-WinFormsVB (`src/01-WinFormsVB`)
+### 01-WinFormsVB (`src/01-WinFormsVB`) - Windows-only
 - **What**: Minimal VB WinForms comparison app.
 - **When to use**: Syntax side-by-side while migrating teams.
-- **Run**: `dotnet run --project src/01-WinFormsVB/WinFormsVB.vbproj` (Windows only)
+- **Run**: `dotnet run --project src/01-WinFormsVB/WinFormsVB.vbproj`
 - **Look for**: Same concept implemented in VB vs C#.
 
 ### 02-ConsoleCSharp (`src/02-ConsoleCSharp`)
@@ -68,17 +108,17 @@ SQL Server endpoint: `localhost,14333` (user: `sa`, password: `Your_password123`
 - **Run**: `dotnet run --project src/05-WorkerService/WorkerService.csproj`
 - **Look for**: `BackgroundService`, cancellation tokens, host logging.
 
-### 06-BlazorWebApp (`src/06-BlazorWebApp`, planned)
-- **What**: Planned Blazor sample.
-- **When to use**: Interactive web UI with C#.
-- **Run**: Not yet included.
-- **Look for**: Component model and state handling (future).
+### 06-BlazorWebApp (`src/06-BlazorWebApp`)
+- **What**: Blazor interactive web app sample.
+- **When to use**: Interactive web UI with C# components.
+- **Run**: `dotnet run --project src/06-BlazorWebApp/BlazorWebApp.csproj`
+- **Look for**: Component model, event handling, and state.
 
-### 07-MvcWebApp (`src/07-MvcWebApp`, planned)
-- **What**: Planned ASP.NET Core MVC sample.
+### 07-MvcWebApp (`src/07-MvcWebApp`)
+- **What**: ASP.NET Core MVC sample.
 - **When to use**: Controller/view enterprise web apps.
-- **Run**: Not yet included.
-- **Look for**: Controllers, model binding, views (future).
+- **Run**: `dotnet run --project src/07-MvcWebApp/MvcWebApp.csproj`
+- **Look for**: Controllers, model binding, and views.
 
 ### 08-WebApi-WithAuth (`src/08-WebApi-WithAuth`)
 - **What**: JWT-secured Web API with public + protected endpoints.
