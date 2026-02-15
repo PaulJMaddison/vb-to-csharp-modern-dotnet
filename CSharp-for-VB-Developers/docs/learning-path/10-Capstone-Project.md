@@ -57,7 +57,7 @@ Implement all of the following:
 5. **PR 5**: gateway route + correlation forwarding.
 6. **PR 6**: UI page wiring and final docs.
 
-VB6 mapping: many small merges reduce risk versus one “big bang” rewrite.
+VB.NET mapping: many small merges reduce risk versus one “big bang” rewrite.
 
 ## Trainer facilitation notes
 

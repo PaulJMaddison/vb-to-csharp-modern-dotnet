@@ -20,7 +20,7 @@ Build confidence in automated API verification using integration tests instead o
 - At least one endpoint behavior is verified with assertions.
 - Learner can explain why integration tests catch pipeline issues unit tests may miss.
 
-## Common VB6 pitfalls
+## Common VB.NET pitfalls
 
 - Relying on “click-through” verification as the primary test strategy.
 - Writing fragile tests tied to non-deterministic ordering/time assumptions.

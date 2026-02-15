@@ -24,7 +24,7 @@ Understand how modern ASP.NET Core APIs are structured and how to create/test en
 - You can explain dependency injection at a high level.
 - You can describe why API contracts (DTOs/status codes) matter for clients.
 
-## Common VB6 pitfalls
+## Common VB.NET pitfalls
 
 - Thinking request handling is equivalent to form button click flow.
 - Returning ad-hoc strings instead of consistent JSON/problem responses.

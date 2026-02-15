@@ -1,8 +1,8 @@
 # 08 - Web UI Lab
 
-Goal: practice three UI models and compare them to WinForms habits.
+Goal: use three UI models as a reference/refresher and align team standards for existing MVC/Blazor knowledge.
 
-Mini-labs:
+Mini-labs (reference + refresher):
 
 1. Razor Pages
 2. MVC

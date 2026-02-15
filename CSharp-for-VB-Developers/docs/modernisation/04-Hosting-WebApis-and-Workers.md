@@ -1,8 +1,16 @@
 # Hosting Web APIs and Workers
 
-This guide compares practical hosting options during VB6-to-.NET modernisation.
+This guide compares practical hosting options during VB.NET-to-.NET modernisation.
 
 ## Decision summary
+
+## .NET Framework realities to account for
+
+- Many older web apps depend on `System.Web` and IIS-integrated modules.
+- Authentication/authorization hooks may be tied to IIS pipeline behavior.
+- Some libraries remain Windows-only (COM, registry, Office automation, printer drivers).
+- Plan to isolate these dependencies behind adapters before moving to cross-platform hosting.
+
 
 For most Windows-centric teams:
 

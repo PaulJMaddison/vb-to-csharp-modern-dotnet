@@ -1,6 +1,6 @@
 # Local Dev Setup (Gateway + APIs + Optional Docker DB)
 
-This setup is designed for developers moving from VB6 desktop/web environments to multi-service .NET development.
+This setup is designed for developers moving from VB.NET desktop/web environments to multi-service .NET development.
 
 ## Prerequisites
 
@@ -76,7 +76,7 @@ docker compose down
 - Clean API health: `http://localhost:5111/health`
 - Auth API swagger: `http://localhost:5222/swagger`
 
-## Local debugging tips for VB6 developers
+## Local debugging tips for VB.NET developers
 
 - Keep one terminal per service so logs remain readable.
 - Use consistent correlation IDs when tracing across gateway + APIs.

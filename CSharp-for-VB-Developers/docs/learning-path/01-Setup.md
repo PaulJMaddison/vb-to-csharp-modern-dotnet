@@ -26,7 +26,7 @@ Get the local training environment running so every learner can build the soluti
 - API starts and logs listening URL.
 - `curl` returns `200 OK` on `/health`.
 
-## Common VB6 pitfalls
+## Common VB.NET pitfalls
 
 - Expecting “F5 in one EXE” behavior instead of multi-process service startup.
 - Assuming machine-level COM registration patterns are required.

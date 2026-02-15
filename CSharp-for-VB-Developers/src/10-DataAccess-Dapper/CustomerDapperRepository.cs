@@ -3,7 +3,7 @@ using Dapper;
 
 namespace DataAccessDapper;
 
-// VB6 perspective:
+// VB.NET perspective:
 // - ADO Recordset: very flexible but verbose and mostly string-based.
 // - Dapper: still SQL-first, but maps rows to typed objects with little plumbing.
 // - EF Core: higher-level model/tracking/migrations, often less SQL writing.
