@@ -1,3 +1,39 @@
+# C# and Modern .NET for VB6 Developers – Modernisation Starter Kit
+
+![.NET](https://img.shields.io/badge/.NET-8-blue)
+![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20Web%20%7C%20Cloud-green)
+![Architecture](https://img.shields.io/badge/Architecture-Strangler%20Fig-orange)
+![Training](https://img.shields.io/badge/Purpose-Developer%20Training-informational)
+![Modernisation](https://img.shields.io/badge/Goal-Legacy%20Modernisation-success)
+![License](https://img.shields.io/badge/License-Internal-lightgrey)
+
+This repository is an internal training and reference platform designed to help
+Visual Basic 6 (VB6) Windows/Web application developers transition to modern
+C# and .NET application development using safe, incremental migration patterns.
+
+It provides working examples of:
+
+- Desktop applications (WinForms)
+- Web applications (Razor Pages / MVC / Blazor)
+- Backend Web APIs
+- Reverse Proxy Gateway (Strangler pattern)
+- Background Worker Services
+- Authentication
+- Integration Testing
+- Modern data access approaches
+
+and includes a structured learning path, hands-on labs, and a detailed
+modernisation playbook to support migration from legacy VB6 applications.
+
+## 📦 Repository Purpose
+
+- Teach modern .NET application architecture to VB6 developers
+- Demonstrate differences between Windows and Web development models
+- Provide working reference implementations
+- Support incremental legacy modernisation (Strangler approach)
+- Provide guided workshops and exercises
+- Enable safe experimentation locally
+
 # C# for Visual Basic Windows App Developers
 
 Small, runnable .NET 8 samples for experienced VB6/VB Windows developers learning practical modern C#.
