@@ -187,6 +187,9 @@ See `docs/patterns/`:
 - testing-unit-vs-integration.md
 - reverse-proxy-gateway.md
 
+## Tutorials
+
+- [VB6 to C# and Modern .NET Tutorial](docs/tutorials/VB6-to-CSharp-Tutorial.md)
 ## Modernisation Playbook
 
 For teams modernising VB6/Classic ASP systems incrementally, see `docs/modernisation/`:
