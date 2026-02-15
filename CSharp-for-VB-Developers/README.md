@@ -27,7 +27,7 @@ Suggested order for VB6 developers:
 - Visual Studio 2022 (recommended) or VS Code
 - Optional for database demos: Docker Desktop
 
-## Quickstart: run the lab
+## Quickstart
 
 Build + tests:
 
@@ -36,30 +36,42 @@ dotnet build CSharpForVBDevelopers.sln
 dotnet test src/12-IntegrationTests/IntegrationTests.csproj
 ```
 
-Start gateway + key APIs:
+## Run the Lab
 
-- Windows: `./scripts/run-all.ps1`
-- Linux/Mac: `./scripts/run-all.sh`
+Use the helper scripts to start the gateway and key APIs/UI apps on fixed HTTP ports.
 
-Manual start (three terminals):
+- PowerShell:
 
-```bash
-dotnet run --project src/08-WebApi-WithAuth/WebApiWithAuth.csproj
-dotnet run --project src/11-WebApi-CleanArchitecture/WebApiClean.csproj
-dotnet run --project src/13-ReverseProxy-Gateway/ReverseProxyGateway.csproj
+```powershell
+./scripts/run-lab.ps1
 ```
 
-Open Swagger:
-
-- Auth API: `http://localhost:5222/swagger`
-- Clean API: `http://localhost:5111/swagger`
-
-Hit sample endpoint:
+- bash:
 
 ```bash
-curl http://localhost:5111/health
-curl http://localhost:5000/api/customers
+./scripts/run-lab.sh
 ```
+
+Stop everything with:
+
+```powershell
+./scripts/stop-lab.ps1
+```
+
+```bash
+./scripts/stop-lab.sh
+```
+
+> Note: WinForms projects in this repo are Windows-only.
+
+Default lab URLs:
+
+- Gateway: `http://localhost:5080`
+- Web API (Clean): `http://localhost:5081/swagger`
+- Auth API: `http://localhost:5082/swagger`
+- Razor Pages: `http://localhost:5083`
+- MVC: `http://localhost:5084`
+- Blazor: `http://localhost:5085`
 
 ## Local infrastructure (optional)
 
