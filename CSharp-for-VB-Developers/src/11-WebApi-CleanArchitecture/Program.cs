@@ -1,3 +1,4 @@
+using System.Reflection;
 using WebApiClean;
 using DataAccessEfCore;
 using Microsoft.AspNetCore.Mvc;
@@ -27,6 +28,17 @@ app.MapGet("/health", (HttpContext http) =>
 {
     app.Logger.LogInformation("Health check hit. CorrelationId: {CorrelationId}", http.TraceIdentifier);
     return Results.Ok(new { Status = "ok", CorrelationId = http.TraceIdentifier });
+});
+
+app.MapGet("/api/version", () =>
+{
+    var assembly = Assembly.GetExecutingAssembly().GetName();
+    return Results.Ok(new
+    {
+        application = assembly.Name,
+        version = assembly.Version?.ToString() ?? "unknown",
+        environment = app.Environment.EnvironmentName
+    });
 });
 
 app.MapGet("/api/customers", async (CustomerService service, CancellationToken ct) =>
