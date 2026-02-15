@@ -1,121 +1,128 @@
-# C# for Visual Basic Windows App Developers (Starter Kit)
+# C# for Visual Basic Windows App Developers
 
-This repo is a **hands-on orientation** for Visual Basic (VB) Windows app developers moving into **modern C#/.NET**.
-It’s structured as a small Visual Studio solution with multiple sample projects—each representing a common “app type”
-you’ll see in the C#/.NET world:
+Small, runnable .NET 8 samples for experienced VB6/VB Windows developers learning practical modern C#.
 
-- **Windows Desktop (WinForms)** — classic UI apps (similar to many VB apps)
-- **Console** — quick utilities, batch jobs, tooling
-- **Web App (ASP.NET Core Razor Pages)** — server-rendered web UI
-- **Web API (ASP.NET Core Minimal API)** — REST/JSON backend services
-- **Cloud-style Worker Service** — background processing (often hosted in containers/Cloud)
+## Prerequisites
 
-It also includes an **optional VB WinForms project** (tiny) to help you compare “same idea, different syntax” *without*
-turning the repo into a VB course.
+- .NET 8 SDK
+- Visual Studio 2022 (recommended) or VS Code
+- Optional for database demos: Docker Desktop
 
----
-
-## Should you include a VB app?
-
-**Recommendation:** include *one* small VB project **only for the Windows/WinForms scenario**, as a side-by-side
-syntax comparison (events, controls, common patterns). For web/web API/cloud, VB comparisons usually add noise:
-those app models are already new for many Windows devs, so doubling the code can slow learning.
-
-So this repo includes:
-
-✅ **WinForms in C#** + ✅ **WinForms in VB (comparison)**  
-✅ All other app types: **C# only** with comments + README explanations
-
----
-
-## What’s in the solution?
-
-### `01-WinFormsCSharp` (net8.0-windows)
-- Basic form with button click event
-- Simple list binding
-- Notes on event wiring, `using`, `var`, nullable, etc.
-
-### `01-WinFormsVB` (net8.0-windows) *(optional comparison)*
-- Same UI idea as the C# WinForms project
-- Keeps things minimal—just enough to compare syntax and event handling
-
-### `02-ConsoleCSharp` (net8.0)
-- Shows top-level statements vs `Main`
-- A couple of helper methods and string interpolation
-
-### `03-WebApp-RazorPages` (net8.0)
-- Razor Pages basics
-- A simple “Hello + time” page
-- Quick mapping of concepts: pages, handlers, DI
-
-### `04-WebApi-Minimal` (net8.0)
-- Minimal API endpoints: GET/POST
-- In-memory “todo” list
-- Demonstrates DI, logging, model validation-ish basics
-
-### `05-WorkerService` (net8.0)
-- Background worker loop
-- Logging
-- Configuration and dependency injection patterns common in cloud hosting
-
----
-
-## Prereqs
-
-- **Visual Studio 2022** (recommended) with:
-  - **.NET Desktop Development**
-  - **ASP.NET and web development**
-- Or **.NET 8 SDK** + VS Code
-
----
-
-## Build & Run (Visual Studio)
-
-1. Open `CSharpForVBDevelopers.sln`
-2. Right-click a project → **Set as Startup Project**
-3. Press **F5**
-
----
-
-## Build & Run (CLI)
-
-From the repo root:
+## Quick start
 
 ```bash
-dotnet build
-dotnet run --project src/02-ConsoleCSharp/ConsoleCSharp.csproj
-dotnet run --project src/04-WebApi-Minimal/WebApiMinimal.csproj
-dotnet run --project src/03-WebApp-RazorPages/WebAppRazorPages.csproj
-dotnet run --project src/05-WorkerService/WorkerService.csproj
+dotnet build CSharpForVBDevelopers.sln
+dotnet test src/12-IntegrationTests/IntegrationTests.csproj
 ```
 
-WinForms projects require Windows:
+Run gateway + APIs together:
+
+- Windows: `./scripts/run-all.ps1`
+- Linux/Mac: `./scripts/run-all.sh`
+
+## Local infrastructure (optional)
+
+`docker-compose.yml` provides SQL Server for demos. Build/test does not require Docker.
 
 ```bash
-dotnet run --project src/01-WinFormsCSharp/WinFormsCSharp.csproj
+docker compose up -d
 ```
 
----
+SQL Server endpoint: `localhost,14333` (user: `sa`, password: `Your_password123`).
 
-## VB → C# quick cheat sheet
+## Project catalog
 
-See: `docs/VB-to-CSharp-Cheatsheet.md`
+### 01-WinFormsCSharp (`src/01-WinFormsCSharp`)
+- **What**: Basic WinForms app in C#.
+- **When to use**: Desktop line-of-business tools.
+- **Run**: `dotnet run --project src/01-WinFormsCSharp/WinFormsCSharp.csproj` (Windows only)
+- **Look for**: Event wiring, C# syntax differences from VB.
 
----
+### 01-WinFormsVB (`src/01-WinFormsVB`)
+- **What**: Minimal VB WinForms comparison app.
+- **When to use**: Syntax side-by-side while migrating teams.
+- **Run**: `dotnet run --project src/01-WinFormsVB/WinFormsVB.vbproj` (Windows only)
+- **Look for**: Same concept implemented in VB vs C#.
 
-## Suggested learning path
+### 02-ConsoleCSharp (`src/02-ConsoleCSharp`)
+- **What**: Console basics and helper methods.
+- **When to use**: Scripts, batch jobs, automation.
+- **Run**: `dotnet run --project src/02-ConsoleCSharp/ConsoleCSharp.csproj`
+- **Look for**: Top-level statements, interpolation, method style.
 
-1. **WinForms (C#)**: focus on syntax differences and events
-2. **Console**: get comfortable with C# idioms quickly
-3. **Web API**: learn modern service patterns (DI, logging, config)
-4. **Web App**: learn server-rendered UI basics
-5. **Worker/Cloud**: background processing patterns
+### 03-WebApp-RazorPages (`src/03-WebApp-RazorPages`)
+- **What**: ASP.NET Core Razor Pages app.
+- **When to use**: Server-rendered internal web apps.
+- **Run**: `dotnet run --project src/03-WebApp-RazorPages/WebAppRazorPages.csproj`
+- **Look for**: PageModel handlers, request lifecycle.
 
----
+### 04-WebApi-Minimal (`src/04-WebApi-Minimal`)
+- **What**: Minimal API CRUD-style sample.
+- **When to use**: Lightweight JSON services.
+- **Run**: `dotnet run --project src/04-WebApi-Minimal/WebApiMinimal.csproj`
+- **Look for**: Endpoint mapping, DI, logging basics.
 
-## Notes
+### 05-WorkerService (`src/05-WorkerService`)
+- **What**: Hosted background worker.
+- **When to use**: Queue processing, polling, scheduled tasks.
+- **Run**: `dotnet run --project src/05-WorkerService/WorkerService.csproj`
+- **Look for**: `BackgroundService`, cancellation tokens, host logging.
 
-- Target frameworks are **.NET 8** for longevity.
-- The projects are intentionally small: they’re meant to be read, stepped through, and modified.
+### 06-BlazorWebApp (`src/06-BlazorWebApp`, planned)
+- **What**: Planned Blazor sample.
+- **When to use**: Interactive web UI with C#.
+- **Run**: Not yet included.
+- **Look for**: Component model and state handling (future).
 
-Enjoy—and treat this as a base you can extend for your team.
+### 07-MvcWebApp (`src/07-MvcWebApp`, planned)
+- **What**: Planned ASP.NET Core MVC sample.
+- **When to use**: Controller/view enterprise web apps.
+- **Run**: Not yet included.
+- **Look for**: Controllers, model binding, views (future).
+
+### 08-WebApi-WithAuth (`src/08-WebApi-WithAuth`)
+- **What**: JWT-secured Web API with public + protected endpoints.
+- **When to use**: APIs consumed by SPAs/mobile/other services.
+- **Run**: `dotnet run --project src/08-WebApi-WithAuth/WebApiWithAuth.csproj`
+- **Look for**: Dev token endpoint (learning only), Swagger JWT authorize flow, token validation pipeline.
+
+### 09-DataAccess-EFCore (`src/09-DataAccess-EFCore`)
+- **What**: EF Core data access library (`DbContext`, entity, repository, service).
+- **When to use**: Rich domain/data model with tracking and migrations.
+- **Run**: Referenced by API projects; builds as class library.
+- **Look for**: VB6 ADO comparison comments, unit-of-work with `SaveChanges`.
+
+### 10-DataAccess-Dapper (`src/10-DataAccess-Dapper`)
+- **What**: Dapper repository sample using explicit SQL.
+- **When to use**: SQL-first, high-control data access.
+- **Run**: Builds as class library.
+- **Look for**: ADO vs Dapper vs EF Core tradeoff comments.
+
+### 11-WebApi-CleanArchitecture (`src/11-WebApi-CleanArchitecture`)
+- **What**: Small but realistic API using DTOs, validation, ProblemDetails, logging, correlation IDs.
+- **When to use**: Team APIs needing consistent reliability patterns.
+- **Run**: `dotnet run --project src/11-WebApi-CleanArchitecture/WebApiClean.csproj`
+- **Look for**: Validation responses, middleware pipeline, structured logs.
+
+### 12-IntegrationTests (`src/12-IntegrationTests`)
+- **What**: xUnit integration tests using `WebApplicationFactory`.
+- **When to use**: Verify endpoint behavior through full ASP.NET pipeline.
+- **Run**: `dotnet test src/12-IntegrationTests/IntegrationTests.csproj`
+- **Look for**: Stable tests without external DB dependencies.
+
+### 13-ReverseProxy-Gateway (`src/13-ReverseProxy-Gateway`)
+- **What**: YARP reverse proxy gateway.
+- **When to use**: Front door routing and strangler-style modernization boundaries.
+- **Run**: `dotnet run --project src/13-ReverseProxy-Gateway/ReverseProxyGateway.csproj`
+- **Look for**: Route forwarding `/api/*` and `/auth/*` to separate backend services.
+
+## Pattern docs
+
+See `docs/patterns/`:
+- dependency-injection.md
+- configuration-and-secrets.md
+- logging-and-correlation.md
+- error-handling-problemdetails.md
+- data-access-ef-vs-dapper.md
+- testing-unit-vs-integration.md
+- reverse-proxy-gateway.md
