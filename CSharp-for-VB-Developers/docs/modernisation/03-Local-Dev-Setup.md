@@ -1,117 +1,86 @@
-# Local Development Setup for Modernised Modules
+# Local Dev Setup (Gateway + APIs + Optional Docker DB)
 
-This guide is for VB6 developers new to modern .NET CLI workflows.
+This setup is designed for developers moving from VB6 desktop/web environments to multi-service .NET development.
 
-> **Why this matters:** Fast, repeatable local setup reduces “works on my machine” problems and shortens onboarding.
+## Prerequisites
 
-## What you typically run locally
+- .NET 8 SDK
+- Visual Studio 2022 or VS Code + C# extension
+- Optional: Docker Desktop (for local SQL Server)
 
-For strangler-style development, local environment often includes:
+## Services in this repo
 
-- Gateway (reverse proxy)
-- One or more new Web APIs
-- Optional local SQL Server in Docker
-- Optional connection to shared dev services
+- Gateway: `src/13-ReverseProxy-Gateway`
+- Auth API: `src/08-WebApi-WithAuth`
+- Clean API: `src/11-WebApi-CleanArchitecture`
+- Worker: `src/05-WorkerService`
 
-## Recommended local run model
+## Option A: quick start scripts
 
-## Option A (simple): `dotnet run` for apps, Docker for DB only
+From repo root (`CSharp-for-VB-Developers`):
 
-Use this first. It is easiest to debug in IDE/terminal.
+- Windows: `./scripts/run-all.ps1`
+- Linux/macOS: `./scripts/run-all.sh`
 
-### 1) Start optional DB container
+This starts gateway + key APIs for day-to-day development.
 
-From repo root:
+## Option B: manual startup (multi-terminal)
 
-```bash
-docker compose up -d
-```
-
-### 2) Start backend APIs in separate terminals
-
-```bash
-dotnet run --project src/11-WebApi-CleanArchitecture/WebApiClean.csproj
-```
+Terminal 1:
 
 ```bash
 dotnet run --project src/08-WebApi-WithAuth/WebApiWithAuth.csproj
 ```
 
-### 3) Start gateway
+Terminal 2:
+
+```bash
+dotnet run --project src/11-WebApi-CleanArchitecture/WebApiClean.csproj
+```
+
+Terminal 3:
 
 ```bash
 dotnet run --project src/13-ReverseProxy-Gateway/ReverseProxyGateway.csproj
 ```
 
-### 4) Use helper script if preferred
-
-- Windows: `./scripts/run-all.ps1`
-- Linux/Mac: `./scripts/run-all.sh`
-
-## Option B (later): containers for all services
-
-Use only after team is comfortable. Container-first local setups can be great but add complexity early.
-
-## Suggested local topology
-
-```text
-Browser/Postman
-      |
-      v
- localhost:5000 (Gateway)
-   |                    |
-   v                    v
-:5100 WebApiClean   :5200 WebApiWithAuth
-          \         /
-           v       v
-      SQL Server (Docker)
-```
-
-## Configuration tips
-
-- Keep `appsettings.Development.json` for local settings.
-- Never commit real secrets; use user secrets or environment variables.
-- Document required env vars in a `.env.example` file.
-
-## Troubleshooting for VB6 developers new to CLI
-
-## Symptom: `dotnet` command not found
-
-- Install .NET 8 SDK.
-- Reopen terminal after install.
-- Verify with `dotnet --info`.
-
-## Symptom: Port already in use
-
-- Change launch port in `Properties/launchSettings.json` for that project.
-- Or stop conflicting process.
-
-## Symptom: TLS certificate/browser warning
-
-Run once:
+Optional Terminal 4 (worker):
 
 ```bash
-dotnet dev-certs https --trust
+dotnet run --project src/05-WorkerService/WorkerService.csproj
 ```
 
-## Symptom: SQL connection failures
+## Optional local database with Docker
 
-- Confirm container is running: `docker ps`.
-- Confirm connection string matches host/port.
-- If using this repo’s compose defaults, SQL Server is on `localhost,14333`.
+Start SQL Server container:
 
-## Symptom: Gateway returns 502/Bad Gateway
+```bash
+docker compose up -d
+```
 
-- Check target APIs are running.
-- Check gateway route config points to correct backend URLs.
-- Inspect API startup logs for exceptions.
+Default endpoint from this repo:
 
-## Daily developer checklist
+- Host: `localhost,14333`
+- User: `sa`
+- Password: `Your_password123`
 
-- [ ] Pull latest code.
-- [ ] Start DB (if needed).
-- [ ] Start API(s) and gateway.
-- [ ] Hit health endpoint(s) before coding.
-- [ ] Run relevant tests before commit.
+Stop/remove containers:
 
-Read next: [04-Hosting-WebApis.md](./04-Hosting-WebApis.md).
+```bash
+docker compose down
+```
+
+## Sanity checks
+
+- Gateway route check: `http://localhost:5000/api/customers`
+- Clean API health: `http://localhost:5111/health`
+- Auth API swagger: `http://localhost:5222/swagger`
+
+## Local debugging tips for VB6 developers
+
+- Keep one terminal per service so logs remain readable.
+- Use consistent correlation IDs when tracing across gateway + APIs.
+- Start without Docker first; add DB container only when needed.
+- Capture known-good startup order in team docs.
+
+Next: [04-Hosting-WebApis-and-Workers.md](./04-Hosting-WebApis-and-Workers.md)

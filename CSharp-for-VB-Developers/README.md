@@ -270,7 +270,7 @@ For teams modernising VB6/Classic ASP systems incrementally, see `docs/modernisa
 2. [01-Discovery-Checklist](docs/modernisation/01-Discovery-Checklist.md)
 3. [02-Strangler-Fig-Approach](docs/modernisation/02-Strangler-Fig-Approach.md)
 4. [03-Local-Dev-Setup](docs/modernisation/03-Local-Dev-Setup.md)
-5. [04-Hosting-WebApis](docs/modernisation/04-Hosting-WebApis.md)
+5. [04-Hosting-WebApis-and-Workers](docs/modernisation/04-Hosting-WebApis-and-Workers.md)
 6. [05-Database-Migration-Strategy](docs/modernisation/05-Database-Migration-Strategy.md)
 7. [06-Release-and-Rollback](docs/modernisation/06-Release-and-Rollback.md)
 8. [07-12-to-24-Month-Roadmap](docs/modernisation/07-12-to-24-Month-Roadmap.md)

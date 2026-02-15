@@ -1,80 +1,65 @@
-# Modernising VB6 Web Apps: Overview
+# Modernisation Overview (for VB6 Teams)
 
-If you built and supported VB6-era web systems, you have probably seen this stack in production:
+This playbook is for teams running stable VB6/Classic ASP systems that now need safer releases, better observability, and faster feature delivery.
 
-- Classic ASP pages (`.asp`) serving HTML and forms.
-- COM or COM+ business components (sometimes registered manually on servers).
-- IIS as the front-end web server.
-- ADO for data access.
-- SQL Server with a mix of tables, views, and large stored procedures.
-- Windows Scheduled Tasks, batch EXEs, and file-share integrations for operational work.
+## Modernisation goals
 
-That stack often still works. The challenge is maintainability, deployment risk, and slow change speed.
+- Keep business-critical workflows running while you modernise.
+- Move from tightly coupled UI + data logic to testable API/service boundaries.
+- Improve deployment safety (repeatable deploys + rollback).
+- Reduce person-risk by documenting architecture and release process.
 
-> **Why this matters:** Modernisation is not about rewriting because old is bad. It is about reducing change risk, improving observability, and delivering features faster without breaking the business.
+## What “modernisation” means in practice
 
-## What “modernising VB6 web apps” usually means
+For most VB6 estates, modernisation is **not** a rewrite. It is a staged migration where:
 
-In practical terms, modernisation means introducing a **parallel modern platform** (typically ASP.NET Core + Web APIs + CI/CD + better monitoring) and moving functionality slice by slice.
+1. Existing IIS apps and SQL Server remain in place.
+2. New functionality is delivered in ASP.NET Core APIs/workers.
+3. A gateway routes selected paths from legacy to new services.
+4. Modules move one-by-one (strangler fig pattern).
 
-Typical outcomes:
+## Recommended migration posture
 
-- Existing VB6/Classic ASP functionality keeps running while new modules move to .NET.
-- Core business rules become testable services instead of hidden logic in ASP/COM glue code.
-- Deployments become repeatable and automated.
-- Logging and telemetry make incidents easier to detect and fix.
+- **Start with one vertical slice** (UI/API + logic + data access).
+- **Keep shared database initially** to lower risk and avoid schema churn.
+- **Release frequently** with small blast radius.
+- **Treat rollback as a feature** from day one.
 
-## Guiding principles
-
-## 1) Avoid big-bang rewrites
-
-Big-bang rewrites fail when assumptions drift and business rules are rediscovered too late.
-
-Prefer:
-
-- Small vertical slices (UI/API + business logic + data access) moved one module at a time.
-- Routing old/new through a gateway boundary.
-- Frequent production releases with low blast radius.
-
-## 2) Deliver incremental value
-
-Every modernisation step should have business value, for example:
-
-- Faster report endpoint.
-- More reliable overnight processing.
-- Reduced support ticket volume on a specific module.
-
-Avoid technical-only milestones that create risk without user-visible improvement.
-
-## 3) Safety first: prove before replace
-
-For each migrated slice:
-
-- Add baseline metrics before migration.
-- Run old and new paths side-by-side where possible.
-- Use feature flags or controlled rollout.
-- Keep rollback simple and tested.
-
-## Recommended target architecture (high level)
+## Target transition architecture
 
 ```text
 Users/Browsers
-     |
-     v
-[Gateway / Reverse Proxy]
-   |                    |
-   v                    v
-[Legacy IIS + ASP]   [New ASP.NET Core APIs]
-   |                    |
-   +---------+----------+
+      |
+      v
++---------------------------+
+| Gateway / Reverse Proxy   |
++-------------+-------------+
+              |
+      +-------+-------+
+      |               |
+      v               v
+Legacy IIS      ASP.NET Core APIs
+(VB6/ASP)        + Worker Services
+      \               /
+       +-------------+
+             |
              v
-        [SQL Server]
+         SQL Server
 ```
 
-This keeps production stable while giving teams a clean path to move module by module.
+## Common anti-patterns to avoid
 
-## How to use this playbook
+- Big-bang rewrite with delayed production feedback.
+- Migrating infrastructure and functionality at the same time.
+- Moving to microservices before boundaries are understood.
+- Replacing DB schema and app logic simultaneously.
 
-Start with discovery and risk mapping, then define your first migration slice, then make release/rollback a first-class design concern.
+## Suggested reading order
 
-Read next: [01-Discovery-Checklist.md](./01-Discovery-Checklist.md).
+1. [01-Discovery-Checklist.md](./01-Discovery-Checklist.md)
+2. [02-Strangler-Fig-Approach.md](./02-Strangler-Fig-Approach.md)
+3. [03-Local-Dev-Setup.md](./03-Local-Dev-Setup.md)
+4. [04-Hosting-WebApis-and-Workers.md](./04-Hosting-WebApis-and-Workers.md)
+5. [05-Database-Migration-Strategy.md](./05-Database-Migration-Strategy.md)
+6. [06-Release-and-Rollback.md](./06-Release-and-Rollback.md)
+7. [07-12-to-24-Month-Roadmap.md](./07-12-to-24-Month-Roadmap.md)

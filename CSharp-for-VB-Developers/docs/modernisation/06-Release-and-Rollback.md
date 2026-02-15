@@ -1,96 +1,61 @@
-# Release and Rollback Safety Patterns
+# Release and Rollback
 
-Safe delivery is essential during strangler migration because legacy and modern modules coexist.
+Modernisation succeeds when deployment is safe and reversible.
 
-> **Why this matters:** You are not done when deployment succeeds. You are done when production behavior is stable and reversible.
+## Release principles
 
-## 1) Feature flags
+- Small, frequent releases over large infrequent drops.
+- One migration slice per release where possible.
+- Predefined rollback path before approval to deploy.
 
-Use feature flags to turn new behavior on/off without redeploying.
+## Recommended release flow
 
-Recommended practices:
+1. Build + automated tests.
+2. Deploy to staging and run smoke/integration checks.
+3. Validate dashboards (latency, errors, dependency health).
+4. Production deploy with controlled exposure (feature flag/canary).
+5. Monitor first 30-60 minutes with named release owner.
 
-- Keep flag names business-readable (for example `Orders.NewValidation`).
-- Define owner and expiry date for each flag.
-- Remove stale flags after rollout completion.
+## Rollback strategies
 
-Use flags to:
+## 1) Route rollback (preferred with gateway)
 
-- Enable new module for internal users first.
-- Switch between legacy and modern implementation for same feature.
+- Switch route back from new API to legacy endpoint.
+- Fastest recovery when contracts are compatible.
 
-## 2) Canary releases
+## 2) App rollback
 
-Canary = release to a small traffic subset first.
+- Redeploy previous known-good artifact.
+- Useful when route split is not available.
 
-Example progression:
+## 3) Data rollback
 
-1. Internal users only.
-2. 5% external traffic.
-3. 25% traffic.
-4. 100% if stable.
+- Restore DB backup or execute vetted rollback script.
+- Highest risk; use only when necessary and rehearsed.
 
-At each step, compare:
+## Minimum production checklist
 
-- Error rates.
-- Latency percentiles.
-- Business outcomes (e.g., order completion rate).
+- [ ] Feature flag or route toggle exists.
+- [ ] Last known-good artifact available.
+- [ ] Rollback owner and decision threshold defined.
+- [ ] Dashboard/alerts prepared for release window.
+- [ ] Post-release verification steps documented.
 
-## 3) Blue/green basics
+## Incident-trigger thresholds (example)
 
-Maintain two production environments:
+Rollback if any of these persist beyond agreed window:
 
-- **Blue** (current live)
-- **Green** (new release candidate)
+- Error rate > 2x baseline.
+- p95 latency > 50% regression.
+- Failed business transaction spike.
+- Worker backlog growth without recovery.
 
-Switch traffic from blue to green once validation passes.
+## Post-release review
 
-Benefits:
+After each release:
 
-- Fast rollback (switch back).
-- Lower deployment downtime.
+- Record what changed and why.
+- Capture incidents and time-to-recover.
+- Update runbooks/checklists based on findings.
 
-Costs:
-
-- More infrastructure and release discipline.
-
-## 4) Rollback plan (must exist before release)
-
-Each release should define:
-
-- Trigger conditions (what metrics cause rollback).
-- Who decides rollback.
-- How to rollback route/config/database changes.
-- Post-rollback validation checks.
-
-### Sample rollback template
-
-```text
-Release: Orders API v1.8
-Rollback trigger: p95 latency > 2500 ms for 10 min OR error rate > 2%
-Rollback action:
-  1) Flip gateway route /orders/* to legacy
-  2) Disable feature flag Orders.ModernPath
-  3) Verify order create/read smoke tests
-Owner on-call: Platform + Orders lead
-```
-
-## Logging/telemetry requirements
-
-Minimum required before production cutover:
-
-- Structured logs with correlation IDs.
-- Request metrics: rate, errors, latency p50/p95/p99.
-- Dependency metrics: DB calls, downstream API failures.
-- Business KPI probes for migrated workflows.
-- Dashboards + alerts reviewed by on-call team.
-
-## Pre-release checklist
-
-- [ ] Feature flag and fallback path tested.
-- [ ] Canary stages defined.
-- [ ] Rollback runbook approved.
-- [ ] On-call coverage confirmed.
-- [ ] Post-release observation window scheduled.
-
-Read next: [07-12-to-24-Month-Roadmap.md](./07-12-to-24-Month-Roadmap.md).
+Next: [07-12-to-24-Month-Roadmap.md](./07-12-to-24-Month-Roadmap.md)
